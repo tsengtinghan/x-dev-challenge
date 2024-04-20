@@ -1,3 +1,6 @@
+'use client'
+ 
+import { useSearchParams } from 'next/navigation'
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -12,6 +15,9 @@ const tweets = [
   // Add more tweets as needed
 ];
 export default function Console({ params }: { params: { id: string } }) {
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
+  if (!id) return <div>Invalid user id</div> 
   return (
     <div>
       <div className="flex">
@@ -36,6 +42,7 @@ export default function Console({ params }: { params: { id: string } }) {
               <Separator className="my-2" />
             </>
           ))} */}
+          <Separator className="my-2" />
           {tweets.map((tweet, index) => (
             <>
               <QuestionTweet

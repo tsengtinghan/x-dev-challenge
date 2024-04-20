@@ -10,8 +10,8 @@ export default function QuestionTweet({
   return (
     <div className="flex">
       <h1 className="grow">{content}</h1>
-      <div>{time}</div>
-      <div className="flex">
+      <div className="flex justify-between">
+        <div>Next Appear: {time}</div>
         <FaRegEdit />
         <MdDelete />
       </div>
