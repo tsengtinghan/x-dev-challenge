@@ -11,7 +11,7 @@ export default function QuestionTweet({
     <div className="flex">
       <h1 className="grow">{content}</h1>
       <div>{time}</div>
-      <div>
+      <div className="flex">
         <FaRegEdit />
         <MdDelete />
       </div>

@@ -5,6 +5,12 @@ import QuestionTweet from "@/components/ui/question-tweet";
 const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`
 );
+const tweets = [
+  { content: "hi", time: "11hr" },
+  { content: "hello", time: "12hr" },
+  { content: "hey", time: "13hr" },
+  // Add more tweets as needed
+];
 export default function Console({ params }: { params: { id: string } }) {
   return (
     <div>
@@ -22,17 +28,26 @@ export default function Console({ params }: { params: { id: string } }) {
       <ScrollArea className="h-72 w-auto rounded-md border">
         <div className="p-4">
           <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
-          {tags.map((tag) => (
+          {/* {tags.map((tag) => (
             <>
               <div key={tag} className="text-sm">
                 {tag}
               </div>
               <Separator className="my-2" />
             </>
+          ))} */}
+          {tweets.map((tweet, index) => (
+            <>
+              <QuestionTweet
+                key={index}
+                content={tweet.content}
+                time={tweet.time}
+              />
+              <Separator className="my-2" />
+            </>
           ))}
         </div>
       </ScrollArea>
-      <QuestionTweet content = "hi" time="11hr"></QuestionTweet>
     </div>
   );
 }
