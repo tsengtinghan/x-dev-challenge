@@ -14,7 +14,7 @@ const tweets = [
   { content: "hello", time: "12hr" },
   { content: "hey", time: "13hr" },
 ];
-export default function Console({ params }: { params: { id: string } }) {
+export default function Console() {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
   if (!id) return <div>Invalid user id</div> 
