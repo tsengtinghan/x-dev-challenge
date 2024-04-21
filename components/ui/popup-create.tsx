@@ -17,9 +17,26 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const submitImport = () => {
-  console.log("Submit import");
-};
+const API_BASE_URL = "https://your-backend-api.com";
+
+function submitData(endpoint: string, data: {}) {
+  return fetch(`${API_BASE_URL}/${endpoint}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .catch((e) => {
+      console.error("Error submitting data:", e);
+    });
+}
 
 export function PopoverDemo() {
   const [formData, setFormData] = useState({
@@ -27,18 +44,42 @@ export function PopoverDemo() {
     customPrompt: "",
     quote: "",
     question: "",
-    answer: ""
+    answer: "",
   });
 
-  const submitImport = () => {
-    console.log("Submit import");
+  const handleSubmit = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+    formType: string
+  ) => {
+    event.preventDefault();
+    let endpoint = "";
+    let data = {};
+
+    switch (formType) {
+      case "import":
+        endpoint = "import";
+        data = { url: formData.importUrl, prompt: formData.customPrompt };
+        break;
+      case "quote":
+        endpoint = "quotes";
+        data = { quote: formData.quote };
+        break;
+      case "question":
+        endpoint = "questions";
+        data = { question: formData.question, answer: formData.answer };
+        break;
+      default:
+        return;
+    }
+
+    const response = await submitData(endpoint, data);
+    console.log("Server response:", response);
   };
-  
-  const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -65,15 +106,25 @@ export function PopoverDemo() {
               <CardContent className="space-y-2">
                 <div className="space-y-1">
                   <Label htmlFor="url">URL</Label>
-                  <Input id="url" name="importUrl" value={formData.importUrl} onChange={handleChange} />
+                  <Input
+                    id="url"
+                    name="importUrl"
+                    value={formData.importUrl}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="customPrompt">Custom Prompt</Label>
-                  <Input id="customPrompt" name="customPrompt" value={formData.customPrompt} onChange={handleChange} />
+                  <Input
+                    id="customPrompt"
+                    name="customPrompt"
+                    value={formData.customPrompt}
+                    onChange={handleChange}
+                  />
                 </div>
               </CardContent>
               <CardFooter>
-                <Button onClick={submitImport}>Add</Button>
+                <Button onClick={(e) => handleSubmit(e, "import")}>Add</Button>
               </CardFooter>
             </Card>
           </TabsContent>
@@ -88,11 +139,17 @@ export function PopoverDemo() {
               <CardContent className="space-y-2">
                 <div className="space-y-1">
                   <Label htmlFor="quote">Quote</Label>
-                  <Input id="quote" name="quote" type="text" value={formData.quote} onChange={handleChange} />
+                  <Input
+                    id="quote"
+                    name="quote"
+                    type="text"
+                    value={formData.quote}
+                    onChange={handleChange}
+                  />
                 </div>
               </CardContent>
               <CardFooter>
-                <Button>Add</Button>
+                <Button onClick={(e) => handleSubmit(e, "quote")}>Add</Button>
               </CardFooter>
             </Card>
           </TabsContent>
@@ -107,15 +164,27 @@ export function PopoverDemo() {
               <CardContent className="space-y-2">
                 <div className="space-y-1">
                   <Label htmlFor="question">Question</Label>
-                  <Input id="question" name="question" value={formData.question} onChange={handleChange} />
+                  <Input
+                    id="question"
+                    name="question"
+                    value={formData.question}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="answer">Answer</Label>
-                  <Input id="answer" name="answer" value={formData.answer} onChange={handleChange} />
+                  <Input
+                    id="answer"
+                    name="answer"
+                    value={formData.answer}
+                    onChange={handleChange}
+                  />
                 </div>
               </CardContent>
               <CardFooter>
-                <Button>Add</Button>
+                <Button onClick={(e) => handleSubmit(e, "question")}>
+                  Add
+                </Button>
               </CardFooter>
             </Card>
           </TabsContent>
