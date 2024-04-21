@@ -25,29 +25,25 @@ interface QuestionMaterial {
 }
 
 
-const tweets = [
-  { content: "hi", time: "11hr" },
-  { content: "hello", time: "12hr" },
-  { content: "hey", time: "13hr" },
-];
+
 export default function Console() {
   const [materials, setMaterials] = useState<Array<QuestionMaterial | QuoteMaterial>>([]);
   const searchParams = useSearchParams()
   const user_id = searchParams.get('user_id')
+  useEffect(() => {
+    fetchMaterials();
+  }, []);
   if (!user_id) return <div>Invalid user id</div> 
   const fetchMaterials = async () => {
     try {
-      const response = await fetch('https://your-backend-url.com/materials');
-      const data: Array<QuestionMaterial | QuoteMaterial> = await response.json();
-      setMaterials(data);
+      const response = await fetch('/test.json');
+      const data = await response.json();
+      setMaterials(data.materials);
+      console.log(data)
     } catch (error) {
       console.error('Failed to fetch materials:', error);
     }
   };
-
-  useEffect(() => {
-    fetchMaterials();
-  }, []);
 
   return (
     <div>
@@ -59,12 +55,12 @@ export default function Console() {
           <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
           
           <Separator className="my-2" />
-          {tweets.map((tweet, index) => (
+          {materials.map((tweet, index) => (
             <>
               <QuestionTweet
                 key={index}
-                content={tweet.content}
-                time={tweet.time}
+                content={tweet.type === 'quote' ? tweet.content : tweet.question}
+                time={tweet.nextReviewTime}
               />
               <Separator className="my-2" />
             </>

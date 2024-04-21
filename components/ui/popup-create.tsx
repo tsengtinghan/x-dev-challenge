@@ -39,7 +39,7 @@ function submitData(endpoint: string, data: {}) {
     });
 }
 
-export function PopoverDemo({ onAddMaterial }) {
+export function PopoverDemo({ onAddMaterial } : { onAddMaterial: () => void }) {
   const [formData, setFormData] = useState({
     importUrl: "",
     customPrompt: "",
