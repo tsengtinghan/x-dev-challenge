@@ -36,9 +36,9 @@ export default function Console() {
   if (!user_id) return <div>Invalid user id</div> 
   const fetchMaterials = async () => {
     try {
-      const response = await fetch('/test.json');
+      const response = await fetch('https://xlearn-rnuz.onrender.com/materials?user_id=' + user_id);
       const data = await response.json();
-      setMaterials(data.materials);
+      setMaterials(data);
       console.log(data)
     } catch (error) {
       console.error('Failed to fetch materials:', error);
