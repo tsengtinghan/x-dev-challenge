@@ -17,26 +17,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const API_BASE_URL = "https://your-backend-api.com";
-
-function submitData(endpoint: string, data: {}) {
-  return fetch(`${API_BASE_URL}/${endpoint}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .catch((e) => {
-      console.error("Error submitting data:", e);
-    });
-}
+const submitImport = () => {
+  console.log("Submit import");
+};
 
 export function PopoverDemo() {
   const [formData, setFormData] = useState({
@@ -44,51 +27,27 @@ export function PopoverDemo() {
     customPrompt: "",
     quote: "",
     question: "",
-    answer: "",
+    answer: ""
   });
 
-  const handleSubmit = async (
-    event: React.MouseEvent<HTMLButtonElement>,
-    formType: string
-  ) => {
-    event.preventDefault();
-    let endpoint = "";
-    let data = {};
-
-    switch (formType) {
-      case "import":
-        endpoint = "import";
-        data = { url: formData.importUrl, prompt: formData.customPrompt };
-        break;
-      case "quote":
-        endpoint = "quotes";
-        data = { quote: formData.quote };
-        break;
-      case "question":
-        endpoint = "questions";
-        data = { question: formData.question, answer: formData.answer };
-        break;
-      default:
-        return;
-    }
-
-    const response = await submitData(endpoint, data);
-    console.log("Server response:", response);
+  const submitImport = () => {
+    console.log("Submit import");
   };
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  
+  const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormData((prevState) => ({
+    setFormData(prevState => ({
       ...prevState,
-      [name]: value,
+      [name]: value
     }));
   };
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline">Open popover</Button>
+        <Button>New</Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[auto]">
+      <PopoverContent className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <Tabs defaultValue="import" className="w-[600px]">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="import">Import</TabsTrigger>
@@ -106,25 +65,15 @@ export function PopoverDemo() {
               <CardContent className="space-y-2">
                 <div className="space-y-1">
                   <Label htmlFor="url">URL</Label>
-                  <Input
-                    id="url"
-                    name="importUrl"
-                    value={formData.importUrl}
-                    onChange={handleChange}
-                  />
+                  <Input id="url" name="importUrl" value={formData.importUrl} onChange={handleChange} />
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="customPrompt">Custom Prompt</Label>
-                  <Input
-                    id="customPrompt"
-                    name="customPrompt"
-                    value={formData.customPrompt}
-                    onChange={handleChange}
-                  />
+                  <Input id="customPrompt" name="customPrompt" value={formData.customPrompt} onChange={handleChange} />
                 </div>
               </CardContent>
               <CardFooter>
-                <Button onClick={(e) => handleSubmit(e, "import")}>Add</Button>
+                <Button onClick={submitImport}>Add</Button>
               </CardFooter>
             </Card>
           </TabsContent>
@@ -133,23 +82,17 @@ export function PopoverDemo() {
               <CardHeader>
                 <CardTitle>Quotes</CardTitle>
                 <CardDescription>
-                  Change your password here. After saving, you'll be logged out.
+                  Change your password here. After saving, youll be logged out.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
                 <div className="space-y-1">
                   <Label htmlFor="quote">Quote</Label>
-                  <Input
-                    id="quote"
-                    name="quote"
-                    type="text"
-                    value={formData.quote}
-                    onChange={handleChange}
-                  />
+                  <Input id="quote" name="quote" type="text" value={formData.quote} onChange={handleChange} />
                 </div>
               </CardContent>
               <CardFooter>
-                <Button onClick={(e) => handleSubmit(e, "quote")}>Add</Button>
+                <Button>Add</Button>
               </CardFooter>
             </Card>
           </TabsContent>
@@ -158,33 +101,21 @@ export function PopoverDemo() {
               <CardHeader>
                 <CardTitle>Questions</CardTitle>
                 <CardDescription>
-                  Make changes to your Import here. Click save when you're done.
+                  Make changes to your Import here. Click save when youre done.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
                 <div className="space-y-1">
                   <Label htmlFor="question">Question</Label>
-                  <Input
-                    id="question"
-                    name="question"
-                    value={formData.question}
-                    onChange={handleChange}
-                  />
+                  <Input id="question" name="question" value={formData.question} onChange={handleChange} />
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="answer">Answer</Label>
-                  <Input
-                    id="answer"
-                    name="answer"
-                    value={formData.answer}
-                    onChange={handleChange}
-                  />
+                  <Input id="answer" name="answer" value={formData.answer} onChange={handleChange} />
                 </div>
               </CardContent>
               <CardFooter>
-                <Button onClick={(e) => handleSubmit(e, "question")}>
-                  Add
-                </Button>
+                <Button>Add</Button>
               </CardFooter>
             </Card>
           </TabsContent>
