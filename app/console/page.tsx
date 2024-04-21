@@ -6,14 +6,7 @@ import QuestionTweet from "@/components/ui/question-tweet";
 import { PopoverDemo } from '@/components/ui/popup-create';
 import {
   Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
   CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command"
 
 
@@ -22,7 +15,7 @@ import React, { useState, useEffect } from "react";
 interface QuoteMaterial {
   type: "quote";
   content: string;
-  nextReviewTime: string;
+  next_review_time: string;
   source?: string;
 }
 
@@ -30,7 +23,7 @@ interface QuestionMaterial {
   type: "question";
   question: string;
   answer: string;
-  nextReviewTime: string;
+  next_review_time: string;
   displayAnswer?: boolean;
   source?: string;
 }
@@ -69,21 +62,13 @@ export default function Console() {
           <ScrollArea className="h-72 w-auto rounded-md border">
             <div className="p-4">
               <h1 className="mb-4 text-sm font-medium leading-none">Tags</h1>
-              {/* {tags.map((tag) => (
-                <>
-                  <div key={tag} className="text-sm">
-                    {tag}
-                  </div>
-                  <Separator className="my-2" />
-                </>
-              ))} */}
               <Separator className="my-2" />
               {materials.map((tweet, index) => (
                 <>
                   <QuestionTweet
                     key={index}
                     content={tweet.type === 'quote' ? tweet.content : tweet.question}
-                    time={tweet.nextReviewTime}
+                    time={tweet.next_review_time}
                   />
                   <Separator className="my-2" />
                 </>
