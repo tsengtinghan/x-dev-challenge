@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+
 export default function ConsoleLayout({
   children, // will be a page or nested layout
 }: {
@@ -6,7 +7,7 @@ export default function ConsoleLayout({
 }) {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <section className="m-5">{children}</section>
+      <section className="dark">{children}</section>
     </Suspense>
   );
 }

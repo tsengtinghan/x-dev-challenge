@@ -12,6 +12,17 @@ import {
 
 import React, { useState, useEffect } from "react";
 
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
+import { useTheme } from "next-themes"
+
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 interface QuoteMaterial {
   type: "quote";
   content: string;
@@ -40,12 +51,11 @@ const subtractTime = (dateString:string) => {
 
 
 export default function Console() {
+  const { setTheme } = useTheme()
   const [materials, setMaterials] = useState<Array<QuestionMaterial | QuoteMaterial>>([]);
   const searchParams = useSearchParams()
   const user_id = searchParams.get('user_id')
-  useEffect(() => {
-    fetchMaterials();
-  }, []);
+  
   if (!user_id) return <div>Invalid user id</div> 
   const fetchMaterials = async () => {
     try {
@@ -58,20 +68,49 @@ export default function Console() {
     }
   };
 
+  useEffect(() => {
+    fetchMaterials();
+  }, []);
+
   return (
-    <div className='h-screen flex justify-center items-center'>
-      <div className='max-w-screen-xl w-full mx-auto'>
-        <div className='grid gap-6 m-8 justify-self-center'>
-          <div className="flex justify-center">
+    <div className="h-screen flex items-center flex-col px-[70px] pt-[50px]">
+          <div className="flex justify-between w-full items-end">
+            
+            <div>
+            <h1 className="text-7xl font-bold text-left">XLearn</h1>
+            </div>
+            <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon">
+                <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                Light
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                Dark
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                System
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          </div>
+          
+          <div className="flex my-10 justify-center w-full">
             <Command className='mr-4'>
               <CommandInput placeholder="Type a command or search..." />
             </Command>
             <PopoverDemo onAddMaterial={fetchMaterials} user_id={user_id} ></PopoverDemo>
           </div>
-          <ScrollArea className="h-72 w-auto rounded-md border">
+          <ScrollArea className="h-[850px] rounded-md border w-full">
             <div className="p-4">
-              <h1 className="mb-4 text-sm font-medium leading-none">Tags</h1>
-              <Separator className="my-2" />
+              {/* <h1 className="mb-4 text-sm font-medium leading-none">Tags</h1>
+              <Separator className="my-2" /> */}
               {materials.map((tweet, index) => (
                 <>
                   <QuestionTweet
@@ -79,13 +118,11 @@ export default function Console() {
                     content={tweet.type === 'quote' ? tweet.content : tweet.question}
                     time={subtractTime(tweet.next_review_time).toString()}
                   />
-                  <Separator className="my-2" />
+                  <Separator className="my-5" />
                 </>
               ))}
             </div>
           </ScrollArea>
-        </div>
-      </div>
     </div>
   );  
 }
