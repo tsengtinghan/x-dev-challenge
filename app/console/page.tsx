@@ -48,7 +48,7 @@ export default function Console() {
   return (
     <div>
       <div className="flex items-center justify-center">
-        <PopoverDemo onAddMaterial={fetchMaterials}></PopoverDemo>
+        <PopoverDemo onAddMaterial={fetchMaterials} user_id={user_id}></PopoverDemo>
       </div>
       <ScrollArea className="h-72 w-auto rounded-md border">
         <div className="p-4">

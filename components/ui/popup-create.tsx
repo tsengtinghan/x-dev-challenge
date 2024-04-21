@@ -18,9 +18,10 @@ import {
   PopoverClose,
 } from "@/components/ui/popover";
 
-const API_BASE_URL = "https://your-backend-api.com";
+const API_BASE_URL = "https://xlearn-rnuz.onrender.com";
 
 function submitData(endpoint: string, data: {}) {
+  console.log(`${API_BASE_URL}/${endpoint}`, JSON.stringify(data));
   return fetch(`${API_BASE_URL}/${endpoint}`, {
     method: "POST",
     headers: {
@@ -39,7 +40,7 @@ function submitData(endpoint: string, data: {}) {
     });
 }
 
-export function PopoverDemo({ onAddMaterial } : { onAddMaterial: () => void }) {
+export function PopoverDemo({ onAddMaterial, user_id } : { onAddMaterial: () => void , user_id: string }) {
   const [formData, setFormData] = useState({
     importUrl: "",
     customPrompt: "",
@@ -52,7 +53,7 @@ export function PopoverDemo({ onAddMaterial } : { onAddMaterial: () => void }) {
     event: React.MouseEvent<HTMLButtonElement>,
     formType: string
   ) => {
-    event.preventDefault();
+    // event.preventDefault();
     let endpoint = "";
     let data = {};
 
@@ -66,13 +67,14 @@ export function PopoverDemo({ onAddMaterial } : { onAddMaterial: () => void }) {
         data = { quote: formData.quote };
         break;
       case "question":
-        endpoint = "questions";
-        data = { question: formData.question, answer: formData.answer };
+        endpoint = "question";
+        data = { user_id: user_id, question: formData.question, answer: formData.answer };
+        console.log(data);
         break;
       default:
         return;
     }
-
+    console.log("Submitting data:", data);
     const response = await submitData(endpoint, data);
     console.log("Server response:", response);
     onAddMaterial();
