@@ -35,15 +35,11 @@ interface QuestionMaterial {
   source?: string;
 }
 
-
-
 export default function Console() {
   const [materials, setMaterials] = useState<Array<QuestionMaterial | QuoteMaterial>>([]);
   const searchParams = useSearchParams()
   const user_id = searchParams.get('user_id')
-  useEffect(() => {
-    fetchMaterials();
-  }, []);
+  
   if (!user_id) return <div>Invalid user id</div> 
   const fetchMaterials = async () => {
     try {
@@ -55,6 +51,10 @@ export default function Console() {
       console.error('Failed to fetch materials:', error);
     }
   };
+
+  useEffect(() => {
+    fetchMaterials();
+  }, []);
 
   return (
     <div className='h-screen flex justify-center items-center'>
