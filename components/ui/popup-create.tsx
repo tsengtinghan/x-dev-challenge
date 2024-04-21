@@ -17,6 +17,8 @@ import {
   PopoverTrigger,
   PopoverClose,
 } from "@/components/ui/popover";
+import { HiSparkles } from "react-icons/hi2";
+
 
 const API_BASE_URL = "https://xlearn-rnuz.onrender.com";
 
@@ -94,7 +96,10 @@ export function PopoverDemo({ onAddMaterial, user_id } : { onAddMaterial: () => 
   return (
       <Popover>
         <PopoverTrigger asChild>
-          <Button type='button'>New</Button>
+        <Button className="bg-blue-500 hover:bg-blue-400 text-white rounded-full py-2 px-4 flex items-center">
+          <h3>New</h3>
+          <HiSparkles className='m-1'/>
+        </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[auto] fixed"
       style={{ left: `${centerX}px`, top: `${centerY}px`}}>
