@@ -27,7 +27,16 @@ interface QuestionMaterial {
   displayAnswer?: boolean;
   source?: string;
 }
-
+const subtractTime = (dateString:string) => {
+  const specifiedDate = new Date(dateString);
+  if (isNaN(specifiedDate.getTime())) {
+    return "Invalid date"; // Return an error message if the date is not valid.
+  }
+  const currentDate = new Date();
+  const differenceInMilliseconds = currentDate.getTime() - specifiedDate.getTime();
+  const differenceInHours = differenceInMilliseconds / (1000 * 60 * 60); // Convert milliseconds to hours
+  return differenceInHours.toFixed(2).toString()+'hr';
+};
 
 
 export default function Console() {
@@ -68,7 +77,7 @@ export default function Console() {
                   <QuestionTweet
                     key={index}
                     content={tweet.type === 'quote' ? tweet.content : tweet.question}
-                    time={tweet.next_review_time}
+                    time={subtractTime(tweet.next_review_time).toString()}
                   />
                   <Separator className="my-2" />
                 </>
