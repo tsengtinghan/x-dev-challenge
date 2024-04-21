@@ -15,6 +15,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  PopoverClose,
 } from "@/components/ui/popover";
 
 const API_BASE_URL = "https://your-backend-api.com";
@@ -125,7 +126,11 @@ export function PopoverDemo({ onAddMaterial }) {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button onClick={(e) => handleSubmit(e, "import")}>Add</Button>
+                <PopoverClose>
+                  <Button onClick={(e) => handleSubmit(e, "import")}>
+                    Add
+                  </Button>
+                </PopoverClose>
               </CardFooter>
             </Card>
           </TabsContent>
@@ -150,7 +155,9 @@ export function PopoverDemo({ onAddMaterial }) {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button onClick={(e) => handleSubmit(e, "quote")}>Add</Button>
+                <PopoverClose>
+                  <Button onClick={(e) => handleSubmit(e, "quote")}>Add</Button>
+                </PopoverClose>
               </CardFooter>
             </Card>
           </TabsContent>
@@ -183,9 +190,11 @@ export function PopoverDemo({ onAddMaterial }) {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button onClick={(e) => handleSubmit(e, "question")}>
-                  Add
-                </Button>
+                <PopoverClose asChild>
+                  <Button onClick={(e) => handleSubmit(e, "question")}>
+                    Add
+                  </Button>
+                </PopoverClose>
               </CardFooter>
             </Card>
           </TabsContent>
