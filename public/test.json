@@ -1,0 +1,33 @@
+{
+    "materials": [
+      {
+        "type": "quote",
+        "content": "The only way to do great work is to love what you do.",
+        "nextReviewTime": "2024-04-21T14:00:00Z",
+        "source": "Steve Jobs"
+      },
+      {
+        "type": "question",
+        "question": "What is the capital of France?",
+        "answer": "Paris",
+        "nextReviewTime": "2024-04-22T15:00:00Z",
+        "displayAnswer": true,
+        "source": "Geography Textbook"
+      },
+      {
+        "type": "quote",
+        "content": "In the end, we will remember not the words of our enemies, but the silence of our friends.",
+        "nextReviewTime": "2024-04-23T16:00:00Z",
+        "source": "Martin Luther King Jr."
+      },
+      {
+        "type": "question",
+        "question": "What is the chemical formula for water?",
+        "answer": "H2O",
+        "nextReviewTime": "2024-04-24T17:00:00Z",
+        "displayAnswer": false,
+        "source": null
+      }
+    ]
+  }
+  

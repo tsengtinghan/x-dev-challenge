@@ -64,7 +64,7 @@ export function PopoverDemo({ onAddMaterial, user_id } : { onAddMaterial: () => 
         break;
       case "quote":
         endpoint = "quotes";
-        data = { quote: formData.quote };
+        data = { user_id: user_id, content: formData.quote };
         break;
       case "question":
         endpoint = "question";

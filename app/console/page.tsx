@@ -1,6 +1,5 @@
 'use client'
 import { useSearchParams } from 'next/navigation'
-import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import QuestionTweet from "@/components/ui/question-tweet";
@@ -20,20 +19,46 @@ import {
 const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`
 );
-const tweets = [
-  { content: "hi", time: "11hr" },
-  { content: "hello", time: "12hr" },
-  { content: "hey", time: "13hr" },
-  { content: "hey hey", time: "13hr" },
-  { content: "hellooo", time: "13hr" },
-  { content: "hi", time: "13hr" },
-  { content: "hey", time: "13hr" },
-  { content: "hey", time: "13hr" },
-];
+
+import React, { useState, useEffect } from "react";
+
+interface QuoteMaterial {
+  type: "quote";
+  content: string;
+  nextReviewTime: string;
+  source?: string;
+}
+
+interface QuestionMaterial {
+  type: "question";
+  question: string;
+  answer: string;
+  nextReviewTime: string;
+  displayAnswer?: boolean;
+  source?: string;
+}
+
+
+
 export default function Console() {
+  const [materials, setMaterials] = useState<Array<QuestionMaterial | QuoteMaterial>>([]);
   const searchParams = useSearchParams()
-  const id = searchParams.get('id')
-  if (!id) return <div>Invalid user id</div> 
+  const user_id = searchParams.get('user_id')
+  useEffect(() => {
+    fetchMaterials();
+  }, []);
+  if (!user_id) return <div>Invalid user id</div> 
+  const fetchMaterials = async () => {
+    try {
+      const response = await fetch('https://xlearn-rnuz.onrender.com/materials?user_id=' + user_id);
+      const data = await response.json();
+      setMaterials(data);
+      console.log(data)
+    } catch (error) {
+      console.error('Failed to fetch materials:', error);
+    }
+  };
+
   return (
     <div className='h-screen flex justify-center items-center'>
       <div className='max-w-screen-xl w-full mx-auto'>
@@ -42,7 +67,7 @@ export default function Console() {
             <Command className='mr-4'>
               <CommandInput placeholder="Type a command or search..." />
             </Command>
-            <PopoverDemo></PopoverDemo>
+            <PopoverDemo onAddMaterial={fetchMaterials} user_id={user_id} ></PopoverDemo>
           </div>
           <ScrollArea className="h-72 w-auto rounded-md border">
             <div className="p-4">
@@ -56,12 +81,12 @@ export default function Console() {
                 </>
               ))} */}
               <Separator className="my-2" />
-              {tweets.map((tweet, index) => (
+              {materials.map((tweet, index) => (
                 <>
                   <QuestionTweet
                     key={index}
-                    content={tweet.content}
-                    time={tweet.time}
+                    content={tweet.type === 'quote' ? tweet.content : tweet.question}
+                    time={tweet.nextReviewTime}
                   />
                   <Separator className="my-2" />
                 </>
