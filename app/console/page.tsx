@@ -59,19 +59,25 @@ export default function Console() {
   };
 
   return (
-    <div className='h-screen flex justify-center items-center'>
-      <div className='max-w-screen-xl w-full mx-auto'>
-        <div className='grid gap-6 m-8 justify-self-center'>
-          <div className="flex justify-center">
+    <div className="h-screen flex items-center flex-col px-[70px] pt-[50px]">
+          <div className="flex justify-between w-full items-end">
+            
+            <div>
+            <h1 className="text-7xl font-bold text-left">XLearn</h1>
+            </div>
+            
+            <PopoverDemo onAddMaterial={fetchMaterials} user_id={user_id} ></PopoverDemo>
+          </div>
+          
+          <div className="flex my-10 justify-center w-full">
             <Command className='mr-4'>
               <CommandInput placeholder="Type a command or search..." />
             </Command>
-            <PopoverDemo onAddMaterial={fetchMaterials} user_id={user_id} ></PopoverDemo>
           </div>
-          <ScrollArea className="h-72 w-auto rounded-md border">
+          <ScrollArea className="h-[850px] rounded-md border w-full">
             <div className="p-4">
-              <h1 className="mb-4 text-sm font-medium leading-none">Tags</h1>
-              <Separator className="my-2" />
+              {/* <h1 className="mb-4 text-sm font-medium leading-none">Tags</h1>
+              <Separator className="my-2" /> */}
               {materials.map((tweet, index) => (
                 <>
                   <QuestionTweet
@@ -79,13 +85,11 @@ export default function Console() {
                     content={tweet.type === 'quote' ? tweet.content : tweet.question}
                     time={subtractTime(tweet.next_review_time).toString()}
                   />
-                  <Separator className="my-2" />
+                  <Separator className="my-5" />
                 </>
               ))}
             </div>
           </ScrollArea>
-        </div>
-      </div>
     </div>
   );  
 }
