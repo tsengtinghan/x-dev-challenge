@@ -52,8 +52,8 @@ export function PopoverDemo({ onAddMaterial, user_id } : { onAddMaterial: () => 
   });
 
   // this version with the calculated center should work on Vercel!
-  const centerX = -1000;
-  const centerY = -10;
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
 
   const handleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement>,
