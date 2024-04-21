@@ -38,7 +38,7 @@ function submitData(endpoint: string, data: {}) {
     });
 }
 
-export function PopoverDemo() {
+export function PopoverDemo({ onAddMaterial }) {
   const [formData, setFormData] = useState({
     importUrl: "",
     customPrompt: "",
@@ -74,6 +74,7 @@ export function PopoverDemo() {
 
     const response = await submitData(endpoint, data);
     console.log("Server response:", response);
+    onAddMaterial();
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
