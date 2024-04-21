@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import QuestionTweet from "@/components/ui/question-tweet";
+import { PopoverDemo } from '@/components/ui/popup-create';
 const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`
 );
@@ -12,7 +13,6 @@ const tweets = [
   { content: "hi", time: "11hr" },
   { content: "hello", time: "12hr" },
   { content: "hey", time: "13hr" },
-  // Add more tweets as needed
 ];
 export default function Console({ params }: { params: { id: string } }) {
   const searchParams = useSearchParams()
@@ -20,16 +20,8 @@ export default function Console({ params }: { params: { id: string } }) {
   if (!id) return <div>Invalid user id</div> 
   return (
     <div>
-      <div className="flex">
-        <h1 className="grow">User: {params.id}</h1>
-        <div className="flex">
-          <Button variant="default" size="default">
-            Import
-          </Button>
-          <Button variant="default" size="default">
-            New
-          </Button>
-        </div>
+      <div className="flex items-center justify-center">
+        <PopoverDemo ></PopoverDemo>
       </div>
       <ScrollArea className="h-72 w-auto rounded-md border">
         <div className="p-4">

@@ -10,7 +10,7 @@ export default function QuestionTweet({
   return (
     <div className="flex">
       <h1 className="grow">{content}</h1>
-      <div className="flex justify-between">
+      <div className="flex justify-between space-x-5">
         <div>Next Appear: {time}</div>
         <FaRegEdit />
         <MdDelete />
