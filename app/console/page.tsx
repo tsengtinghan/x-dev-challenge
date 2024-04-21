@@ -1,12 +1,10 @@
 'use client'
 import { useSearchParams } from 'next/navigation'
-import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import QuestionTweet from "@/components/ui/question-tweet";
 import { PopoverDemo } from '@/components/ui/popup-create';
 import React, { useState, useEffect } from "react";
-import { type } from 'os';
 
 interface QuoteMaterial {
   type: "quote";
