@@ -8,7 +8,7 @@ export default function QuestionTweet({
   time: string;
 }) {
   return (
-    <div className="flex">
+    <div className="flex anim">
       <h1 className="grow">{content}</h1>
       <div className="flex justify-between space-x-5">
         <div>Next Appear: {time}</div>

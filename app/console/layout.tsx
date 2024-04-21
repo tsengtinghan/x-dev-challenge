@@ -6,7 +6,7 @@ export default function ConsoleLayout({
 }) {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <section className="m-5">{children}</section>
+      <section className="dark">{children}</section>
     </Suspense>
   );
 }
