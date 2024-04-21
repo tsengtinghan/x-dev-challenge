@@ -38,8 +38,20 @@ const subtractTime = (dateString:string) => {
   return differenceInHours.toFixed(2).toString()+'hr';
 };
 
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
+import { useTheme } from "next-themes"
+
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 
 export default function Console() {
+  const { setTheme } = useTheme()
   const [materials, setMaterials] = useState<Array<QuestionMaterial | QuoteMaterial>>([]);
   const searchParams = useSearchParams()
   const user_id = searchParams.get('user_id')
@@ -64,11 +76,31 @@ export default function Console() {
     <div className='h-screen flex justify-center items-center'>
       <div className='max-w-screen-xl w-full mx-auto'>
         <div className='grid gap-6 m-8 justify-self-center'>
-          <div className="flex justify-center">
+          <div className="flex gap-2 justify-center">
             <Command className='mr-4'>
               <CommandInput placeholder="Type a command or search..." />
             </Command>
             <PopoverDemo onAddMaterial={fetchMaterials} user_id={user_id} ></PopoverDemo>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <SunIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all light:-rotate-90 light:scale-0" />
+                  <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  <span className="sr-only">Toggle theme</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                  System
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           <ScrollArea className="h-72 w-auto rounded-md border">
             <div className="p-4">

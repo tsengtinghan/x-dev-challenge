@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+
 export default function ConsoleLayout({
   children, // will be a page or nested layout
 }: {
