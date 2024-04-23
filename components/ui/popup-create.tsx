@@ -52,8 +52,8 @@ export function PopoverDemo({ onAddMaterial, user_id } : { onAddMaterial: () => 
   });
 
   // this version with the calculated center should work on Vercel!
-  const centerX = window.innerWidth / 2;
-  const centerY = window.innerHeight / 2;
+  const centerX = -1000;
+  const centerY = -10;
 
   const handleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -93,16 +93,28 @@ export function PopoverDemo({ onAddMaterial, user_id } : { onAddMaterial: () => 
     }));
   };
 
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+
+  const toggleOverlay = () => {
+    setIsOverlayVisible(!isOverlayVisible);
+  };
+
   return (
+    <div className="relative">
+      {isOverlayVisible && (
+        <div className="absolute inset-0 bg-blue-500 bg-opacity-80"></div>
+      )}
       <Popover>
         <PopoverTrigger asChild>
-        <Button className="bg-blue-500 hover:bg-blue-400 text-white rounded-full py-2 px-4 flex items-center">
-          <h3>New</h3>
-          <HiSparkles className='m-1'/>
-        </Button>
+          <Button
+            className="bg-blue-500 hover:bg-blue-400 text-white rounded-full py-2 px-4 flex items-center"
+            onClick={toggleOverlay}
+          >
+            <h3>New</h3>
+            <HiSparkles className="m-1" />
+          </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[auto] fixed"
-      style={{ left: `${centerX}px`, top: `${centerY}px`}}>
+        <PopoverContent className="w-[auto] fixed" style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)'}}>
           <Tabs defaultValue="import" className="w-[600px]">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="import">Import</TabsTrigger>
@@ -213,5 +225,6 @@ export function PopoverDemo({ onAddMaterial, user_id } : { onAddMaterial: () => 
           </Tabs>
         </PopoverContent>
       </Popover>
+      </div>
   );
 }
