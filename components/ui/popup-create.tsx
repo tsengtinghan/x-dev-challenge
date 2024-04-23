@@ -66,7 +66,7 @@ export function PopoverDemo({ onAddMaterial, user_id } : { onAddMaterial: () => 
     switch (formType) {
       case "import":
         endpoint = "import";
-        data = { url: formData.importUrl, prompt: formData.customPrompt };
+        data = { user_id: user_id, url: formData.importUrl, custom_prompt: formData.customPrompt };
         break;
       case "quote":
         endpoint = "quote";
